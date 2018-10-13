@@ -41,7 +41,7 @@
 \newcommand{\vmed}[1]{\left \langle #1 \right \rangle}
 \newcommand{\tr}{\operatorname{Tr}}
 
-\newcommand{\rarr}{\hspace{0.5cm} \mathbb{\rightarrow} \hspace{0.5cm}}
+\newcommand{\Rarr}{\hspace{0.5cm} \mathbb{\Rightarrow} \hspace{0.5cm}}
 
 
 
@@ -161,8 +161,8 @@ Since \eqref{Gaussian Integral} and $det(A)$ are analytic functions of $A$'s coe
 3 & -1 \\
 -1 & 3
 \end{matrix}
-\right) \rarr (3-\lambda)^2 - 1 = 0 $$
-$$ \mathbb{\rightarrow} \hspace{0.5cm} \lambda_{1,2} = \frac{3+\sqrt{9-8}}{2} \rarr \begin{matrix}
+\right) \Rarr (3-\lambda)^2 - 1 = 0 $$
+$$ \mathbb{\rightarrow} \hspace{0.5cm} \lambda_{1,2} = \frac{3+\sqrt{9-8}}{2} \Rarr \begin{matrix}
 \lambda_1 = 2 \\ \lambda_2 = 4
 \end{matrix}
 $$
@@ -176,10 +176,104 @@ Let us try to generalize the previous agruments for a more general kind of integ
 Z(A) = \int d^{n}x \cdot e^{ -A_2(\vec{x}) + \vec{b} \cdot \vec{x} }
 \end{equation}
 
-With $ \vec{b} \cdot \vec{x} = \sum\limits_{i=1}^{n}b_i x_i $. We want to have the integral in the form of \eqref{Gaussian Integral} so we expand the exponent near his maximum $x_c$. \\
-To find $x_c$ (signs are already changed):
-$$ \frac{\partial}{\partial x_i} (A_2(x) - \vec{b} \cdot \vec{x}) = 0 \rarr \sum\limits_{j} A_ij x_j = b_i $$
+With $ \vec{b} \cdot \vec{x} = \sum\limits_{i=1}^{n}b_i x_i $. We want to have the integral in the form of \eqref{Gaussian Integral} so we expand the exponent near his maximum $x^*$. \\
+To find $x^*$ (signs are already changed):
+$$ \frac{\partial}{\partial x_i} (A_2(x) - \vec{b} \cdot \vec{x}) = 0 \Rarr \sum\limits_{j} A_{ij} x_j = b_i $$
 
-(Note: $A_2 = A/2$: in the derivative the factor 1/2 goes away with the exponent 2.)
+(Note: $A_2 = A/2$: in the derivative the factor 1/2 goes away because we are derivating a quadratic form (if one does the calculation, it can be seen easy).)
+
+So the solution is:
+
+$$ x^* = \sum\limits_{i} (A^{-1})_{ij} b_j $$
+
+Now we change variable $ \vec{x} \Rarr \vec{y} $ in order to have the integral in the form of \eqref{Gaussian Integral}. $\vec{y}$ is the deviation from the min of the exponential:
+
+$$ \vec{y} = \vec{x} - \vec{x^*} \Rarr x_i = x^*_i + y_i $$
+
+$$ \Rarr -A_2 (\vec{x}) + \vec{b} \cdot \vec{x} = w_2(\vec{b}) - A_2 (\vec{y}) $$
+
+Notice that $ w_2(\vec{b})$ is a costant, so it can be eventually take outside the integral.
+
+$$ w_2(\vec{b}) = \frac{1}{2} \sum\limits_{i,j=0}^{n} b_i (A^{-1})_{ij} b_j = \frac{1}{2} \vec{b} \cdot \vec{x^*} $$
+
+With those changes, we can write:
+
+\begin{equation}\label{Gaussian Integral x_to_y}
+Z(A, \vec{b}) = e^{w_2(\vec{b})} \int d^{n}y \cdot e^{ -A_2(\vec{y})} = e^{w_2(\vec{b})} (2\pi)^{\frac{n}{2}} (det(A))^{-\frac{1}{2}}
+\end{equation} \\
+
+\textcolor{blue}
+{ Example (as before) $$ A = \left(
+\begin{matrix}
+3 & -1 \\
+-1 & 3
+\end{matrix}
+\right) \hspace{0.5cm} \mathrm{and} \hspace{0.5cm} b = \left(
+\begin{matrix}
+1 \\
+0
+\end{matrix} \right)
+$$
+$$ Z(A) = \int \int e^{- \frac{1}{2} (x,y) A \left( \begin{smallmatrix}
+x \\
+y
+\end{smallmatrix} \right) +  \left( \begin{smallmatrix}
+x \\
+0
+\end{smallmatrix} \right)} dxdy $$
+$$ A^{-1} = \frac{1}{det(A)} \left(
+\begin{matrix}
+A_{22} & -A_{12} \\
+-A_{21} & A_{11}
+\end{matrix}
+\right) = \frac{1}{8} \left(
+\begin{matrix}
+3 & 1 \\
+1 & 3
+\end{matrix}
+\right) $$
+$$ w_2(\vec{b}) = \frac{1}{2} (1, 0) \frac{1}{8} \left(
+\begin{matrix}
+3 & 1 \\
+1 & 3
+\end{matrix}
+\right) \left(
+\begin{matrix}
+1 \\
+0
+\end{matrix}
+\right) = \frac{1}{16} (1, 0) \left(
+\begin{matrix}
+3 \\
+1
+\end{matrix}
+\right) = \frac{3}{16}
+$$
+$$ \Rarr Z(A, \vec{b}) = e^{\frac{3}{16}} Z(A) = e^{\frac{3}{16}} \frac{\pi}{\sqrt{2}} $$} \\
+
+\section{Gaussian expectation values}
+
+We want now to explore briefly how the expactation values of polynomials with a gaussian distribution works.
+
+\begin{equation}\label{Average Gaussian Polynomial}
+\langle x_{k_1}, x_{k_2}, ... , x_{k_m} \rangle = \underbrace{Z^{-1}(A, \vec{0})}_{Normalization factor} \int d^n x x_{k_1}, x_{k_2}, ... , x_{k_m} e^{-A_2(\vec{x}) }
+\end{equation}
+
+Where the "normalization factor" is that for which $ \langle 1 \rangle = 1 $.
+
+Note: since here we use angular brackets to denote an average made with gaussian weights.\\
+
+From \eqref{Gaussian Integral generalized} we have:
+
+$$ \frac{\partial}{\partial b_k} Z(A, \vec{b}) = \int d^n x \hspace{1mm} x_k \hspace{1mm} e^{-A_2(\vec{x}) + \vec{b} \cdot \vec{x}} $$
+
+In this sense we say that $\vec{b}$ is "completed" to $\vec{x}$ and that Z is the generating function.
+In the case of only 1 variable average note that if $\vec{b}=0$ the result is 0, as one expect for a gaussian variable.
+
+Generalizing \eqref{Average Gaussian Polynomial} to what we just shown, we obtain:
+
+\begin{equation}\label{Average Gaussian Partial}
+\langle x_{k_1}, x_{k_2}, ... , x_{k_m} \rangle = (2\pi)^{-\frac{n}{2}} (detA)^{\frac{1}{2}} \left[ \frac{\partial}{\partial b_{k_1}} \frac{\partial}{\partial b_{k_2}} ... \frac{\partial}{\partial b_{k_m}} Z(A, \vec{b}) \right]_{b=0}
+\end{equation}
 
 \end{document}
