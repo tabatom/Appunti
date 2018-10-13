@@ -75,7 +75,7 @@
 \small{This file is released under \href{http://creativecommons.org/licenses/by-sa/4.0/}{\color{blue}Creative Commons \emph{Attribution-ShareAlike 4.0 International} license}.}
 \begin{figure}[H]
 \centering
-\href{http://creativecommons.org/licenses/by-nc-sa/4.0/deed.it}{\includegraphics[scale=0.15]{by-sa.png}}
+%\href{http://creativecommons.org/licenses/by-nc-sa/4.0/deed.it}{\includegraphics[scale=0.15]{by-sa.png}}
 \end{figure}
 \vspace{0.5em}
 This means that this material can be freely modified and redistributed, as long as it is released under the same license, and proper credit is given to the original author.\\
@@ -139,7 +139,7 @@ Let us bring $A \in \mathbb{R}$. In this case it can be digonalized with orthogo
 
 $$ \sum\limits_{i}^{} O_{ij} x_j = x'_j \hspace{1cm} \mathrm{and} \hspace{1cm} |det(O)| = 1 $$
 
-This implies that the Jacobian matrix of the transormation $J$ (which is $O$ itself) has $|det(J)| = 1$: so when we use it to change coordinates in the integral, we can say that "it has no effect" (we multiply by 1).
+This implies that the Jacobian matrix of the transformation $J$ (which is $O$ itself) has $|det(J)| = 1$: so when we use it to change coordinates in the integral, we can say that "it has no effect" (we multiply by 1).
 Furthermore, with that transformation the non-diagonal coefficients of the new matrix become all 0 (the matrix after the transformation is diagonal), so the new coordinates $x'_j$ are indipendents: this mean that we can evaluate $Z(A)$ by dividing it in the integrals of every single $x'_j$.\\
 We obtain:
 
@@ -152,5 +152,10 @@ Z(A) = (2\pi)^{ \frac{n}{2} } \hspace{1mm} \prod\limits_{i=1}^{n} \hspace{1mm} a
 This have to be investigated.\\
 However, the important key is that the integral with that tranformation does not become divergent.)
 
+\chapter{Path integrals}
+The most captivating feature of the path-integral technique is that it provides a unified approach to solving problems in different branches of physics. For example in the formalism of the stochastic processes we use: $W(x,t|_{0},0)=\sum_{trajectory: \; x_0^t\rightarrow x}e^{-F(trajectory)}$, but this formulation come up from the QM where the probability become the amplitude $K(x,t|_{0},0)=\sum_{trajectory: \; x_0^t\rightarrow x}e^{\frac{2\pi iS}{h}(trajectory)}$ where $S=\int L dt$. \\
+This formulation is not mathematically rigorous but the results are correct, since there is always the possibility to formulate it in a proper way but it will take us too much time.\\
+In this kind of sum we use the concept of configuration, which means to assign to every particles of the system, we decide to study, their position and momentum. This will allow us to make averages in this way:$<A>=\sum_{config}e^{\beta E(config)}A$
+\section{Diffusion}
 
 \end{document}
