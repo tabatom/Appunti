@@ -33,6 +33,7 @@
 }
 
 
+\newtheorem{theorem}{Theorem}[section]
 
 
 \newcommand{\bra}[1]{\left\langle #1 \right |}
@@ -42,6 +43,9 @@
 \newcommand{\tr}{\operatorname{Tr}}
 
 \newcommand{\Rarr}{\hspace{0.5cm} \mathbb{\Rightarrow} \hspace{0.5cm}}
+\newcommand{\parder}[2]{\frac{\partial^ #2}{\partial #1 ^ #2}}
+\newcommand{\partiald}[1]{\frac{\partial}{\partial #1}}
+
 
 
 
@@ -112,6 +116,7 @@ I hope that the overall result will anyway be satisfactory.
 
 \chapter{Methods to compute usefull integrals}
 
+\hspace*{\fill} (02/10/2018) \\ \\
 In this course we will use many kind of particular integrals. For this reason, in this first chapter we will see a brief introduction to all we need to calculate them.
 
 \section{Gaussian integrals}
@@ -270,10 +275,70 @@ $$ \frac{\partial}{\partial b_k} Z(A, \vec{b}) = \int d^n x \hspace{1mm} x_k \hs
 In this sense we say that $\vec{b}$ is "completed" to $\vec{x}$ and that Z is the generating function.
 In the case of only 1 variable average note that if $\vec{b}=0$ the result is 0, as one expect for a gaussian variable.
 
-Generalizing \eqref{Average Gaussian Polynomial} to what we just shown, we obtain:
+Generalizing \eqref{Average Gaussian Polynomial} using what just shown, we obtain:
 
 \begin{equation}\label{Average Gaussian Partial}
-\langle x_{k_1}, x_{k_2}, ... , x_{k_m} \rangle = (2\pi)^{-\frac{n}{2}} (detA)^{\frac{1}{2}} \left[ \frac{\partial}{\partial b_{k_1}} \frac{\partial}{\partial b_{k_2}} ... \frac{\partial}{\partial b_{k_m}} Z(A, \vec{b}) \right]_{b=0}
-\end{equation}
+\langle x_{k_1}, x_{k_2}, ... , x_{k_l} \rangle = (2\pi)^{-\frac{n}{2}} (detA)^{\frac{1}{2}} \left[ \frac{\partial}{\partial b_{k_1}} \frac{\partial}{\partial b_{k_2}} ... \frac{\partial}{\partial b_{k_m}} Z(A, \vec{b}) \right]_{b=0}
+\end{equation} \\ \\
+
+NOT SURE ARGUMENT \\
+We can also notice that if we want to evaluate the expectation value of a power series of x $ \langle F(x) \rangle $ we can write the following, thanks to the linearity of the integral (assuming that x is not a vector):
+
+$$ \langle F(x) \rangle = ... \left[ F \left( \frac{\partial}{\partial b} \right) e^{w_2(b)} \right]_{b=0} $$
+
+The "..." indicates that every power of x in F(x) has its own normalization factor. \\ \\
+
+From \eqref{Average Gaussian Partial} we can obtain one form of Wick's theorem.\\
+If there is one $ \frac{\partial}{\partial b_i} $ in \eqref{Average Gaussian Partial}, it pulls down some $b_j$ because $ w_2(\vec{b}) = \frac{1}{2} \sum\limits_{i,j=0}^{n} b_i (A^{-1})_{ij} b_j $. Without another $ \frac{\partial}{\partial b_k} $ (also with $ k \neq i$ ), setting $ \vec{b} = \vec{0} $ makes all components $ b_j \to 0 $ in $ \langle ... \rangle $. \\
+
+$$\lim_{b_1 \to 0}  \langle b1, ... \rangle \to 0 $$ \\
+
+$\Rightarrow$ Another $ \frac{\partial}{\partial b_k} $ is needed to ensure the average does not tend to 0. \\
+$ \Rightarrow l $ index in \eqref{Average Gaussian Partial} must be even.
+
+\begin{theorem}[Wick's theorem]\label{Wick's theorem}
+Using arguments just above, for every $ k_p k_q $ from the list $ \lbrace k_1, k_2, ... , k_l \rbrace $, with associated $ (A^{-1})_{k_p k_q} $, the average of $l$ (multiplied) variables  can be calculated as following: \\
+
+\begin{align*}
+\left\langle x_{k_1}, x_{k_2}, ... , x_{k_l} \right\rangle & = \sum\limits_{all \hspace{1mm} possible \hspace{1mm} pairings \hspace{1mm} P \hspace{1mm} of \hspace{1mm} \lbrace k_1, ... , k_l \rbrace } A^{-1}_{k_{P_1} k_{P_2}} ... A^{-1}_{k_{P_{l-1}} k_{P_l}} \\
+& = \sum\limits_{all \hspace{1mm} possible \hspace{1mm} pairings \hspace{1mm} P \hspace{1mm} of \hspace{1mm} \lbrace k_1, ... , k_l \rbrace } \langle x_{k_{P_1}} x_{k_{P_2}} \rangle \cdot ... \cdot \langle x_{k_{P_{l-1}}} x_{k_{P_l}} \rangle
+\end{align*}
+
+\end{theorem}
+
+\textcolor{blue}
+{Example: \\
+Let us see an application 1-dim of the theorem: with $ x,b \in \mathbb{R} $
+\begin{align*}
+\langle x^2 \rangle
+& = \frac{1}{Z(A, 0)} \frac{\partial^2}{\partial b^2} \int\limits_{-\infty}^{\infty} x^2 \hspace{1mm} e^{-\frac{A}{2} x + bx} dx \bigg \vert_{b=0} \\
+& = \frac{\partial^2}{\partial b^2} \hspace{1mm} e^{ \frac{b^2}{2A} } \bigg \vert_{b=0} = \frac{\partial}{\partial b} \left[ \frac{b}{A} e^{ \frac{b^2}{2A} } \right]_{b=0} = \frac{1}{A}
+\end{align*}
+\begin{align*}
+\langle x^4 \rangle & = \frac{1}{Z(A, 0)} \parder{b}{4} \int\limits_{-\infty}^{\infty} x^4 \hspace{1mm} e^{-\frac{A}{2} x + bx} dx \bigg \vert_{b=0} = \parder{b}{4} e^{\frac{b^2}{2A}} \bigg\vert_{b=0} = \parder{b}{3} \left[ \frac{b}{A} e^{ \frac{b^2}{2A} } \right]_{b=0} \\
+& = \parder{b}{2} \left[ \frac{1}{A} e^{ \frac{b^2}{2A} } + \frac{b}{A} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } \right]_{b=0} = \partiald{b} \left[ \frac{1}{A} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } + 2 \frac{b}{A^2} e^{ \frac{b^2}{2A} } + \frac{b^2}{A^2} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } \right]_{b=o} \\
+& = \left[ \frac{1}{A^2} e^{ \frac{b^2}{2A} } + \frac{b}{A^2} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } + \frac{2}{A^2} e^{ \frac{b^2}{2A} } + \frac{2b}{A^2} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } + \frac{3b^2}{A^3} e^{ \frac{b^2}{2A} } + \frac{b^3}{A^3} \cdot \frac{b}{A} e^{ \frac{b^2}{2A} } \right]_{b=0} \\
+& = \frac{3}{A^2}
+\end{align*}
+Remembering that $ \langle x^2 \rangle = \frac{1}{A} $ we can write:
+$$ \langle x^4 \rangle = 3 \langle x^2 \rangle^2 $$
+Using Wick's theorem we can rewrite this last result:
+With $l=4$ and A as following:
+$$ A = \left(
+\begin{matrix}
+1 & & & \\
+& 1 & & \\
+& & 1 & \\
+& & & 1
+\end{matrix}
+\right) $$
+we can write:
+\begin{align*}
+\langle x_1 x_2 x_3 x_4 \rangle & = \langle x_1 x_2 \rangle + \langle x_3 x_4 \rangle + \langle x_1 x_3 \rangle \langle x_2 x_4 \rangle + \langle x_1 x_4 \rangle \langle x_2 x_3 \rangle \\
+\end{align*}
+Now come back to the 1-dim case, using $ x = x_{1,2,3,4} $, obtaining:
+$$ \langle x^4 \rangle = \langle x^2 \rangle \cdot \langle x^2 \rangle \cdot 3 = 3 \langle x^2 \rangle^2 $$
+which is the same result as before.}
+
 
 \end{document}
