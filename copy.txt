@@ -1,0 +1,2 @@
+cp ~/Documenti/Università/UniPd/Laurea\ magistrale/Phisycs_of_data/Corsi_pod/Models_of_theoretical_physics/MoTP.pdf .
+cp ~/Documenti/Università/UniPd/Laurea\ magistrale/Phisycs_of_data/Corsi_pod/Models_of_theoretical_physics/MoTP.tex .
